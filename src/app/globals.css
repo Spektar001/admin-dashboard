@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #151c2c;
+  --bgSoft: #182237;
+  --text: #ffffff;
+  --textSoft: #b7bac1;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.transition-settings {
+  @apply transition ease-in duration-200;
+}
+
+td {
+  @apply p-2;
+}
+
+.pending {
+  background-color: #f7cb7375;
+}
+
+.done {
+  background-color: #afd6ee75;
+}
+
+.cancelled {
+  background-color: #f7737375;
+}
+
+.view {
+  @apply px-2 py-1 text-[--text] rounded-md bg-[#008080];
+  @apply hover:bg-[#0a5c5c];
+}
+
+.delete {
+  @apply px-2 py-1 text-[--text] rounded-md bg-[#DC143C];
+  @apply hover:bg-[#a0203a];
+}
+
+.btnPagination {
+  @apply px-2 py-1 bg-[#2E374A] rounded-md;
+  @apply hover:bg-[#3d4659];
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
