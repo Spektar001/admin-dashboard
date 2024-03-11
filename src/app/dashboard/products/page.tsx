@@ -10,7 +10,7 @@ const ProductsPage = () => {
         <Search placeholder={"Search for a product..."} />
         <Link
           className="p-2 bg-[#5d57c9] hover:bg-[#433daa] transition-settings text-[--text] rounded-md"
-          href="/dashboard/products/add"
+          href="/dashboard/products/new-product"
         >
           Add new product
         </Link>
@@ -47,13 +47,13 @@ const ProductsPage = () => {
               <div className="flex gap-3">
                 <Link
                   className="view transition-settings"
-                  href={`/dashboard/users/`}
+                  href={`/dashboard/products/test`}
                 >
                   View
                 </Link>
                 <Link
                   className="delete transition-settings"
-                  href={`/dashboard/users/`}
+                  href={`/dashboard/products/`}
                 >
                   Delete
                 </Link>

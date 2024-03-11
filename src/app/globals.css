@@ -9,6 +9,11 @@
   --textSoft: #b7bac1;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
 body {
   background-color: var(--bg);
   color: var(--text);
@@ -52,4 +57,54 @@ td {
 button:disabled {
   cursor: not-allowed;
   opacity: 0.3;
+}
+
+.form input,
+.form textarea,
+.form select {
+  @apply p-7 bg-[--bg] text-[--text] rounded-md mb-5 border-2 border-[#2e374a];
+}
+
+.form select option {
+  @apply rounded-md bg-[--bgSoft];
+}
+
+.form input,
+.form select {
+  @apply w-[45%];
+}
+
+.form textarea {
+  @apply w-full;
+}
+
+.form button {
+  @apply w-full p-7 bg-teal-500 text-[--text] rounded-md transition-settings;
+  @apply hover:bg-[#00726e];
+}
+
+.formSingleUserAndProduct input,
+.formSingleUserAndProduct textarea,
+.formSingleUserAndProduct select {
+  @apply p-5 bg-[--bg] text-[--text] rounded-md mb-3 border-2 border-[#2e374a];
+}
+
+.formSingleUserAndProduct label {
+  @apply text-sm;
+}
+
+.formSingleUserAndProduct button {
+  @apply w-full p-5 bg-teal-500 text-[--text] rounded-md transition-settings;
+  @apply hover:bg-[#00726e];
+}
+
+.formLogin input,
+.formLogin textarea,
+.formLogin select {
+  @apply w-full p-5 bg-[--bg] text-[--text] rounded-md border-2 border-[#2e374a];
+}
+
+.formLogin button {
+  @apply w-full p-5 bg-teal-500 text-[--text] text-xl rounded-md transition-settings;
+  @apply hover:bg-[#00726e];
 }

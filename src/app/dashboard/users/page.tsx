@@ -10,7 +10,7 @@ const UsersPage = () => {
         <Search placeholder={"Search for a user..."} />
         <Link
           className="p-2 bg-[#5d57c9] hover:bg-[#433daa] transition-settings text-[--text] rounded-md"
-          href="/dashboard/users/add"
+          href="/dashboard/users/new-user"
         >
           Add new user
         </Link>
@@ -47,7 +47,7 @@ const UsersPage = () => {
               <div className="flex gap-3">
                 <Link
                   className="view transition-settings"
-                  href={`/dashboard/users/`}
+                  href={`/dashboard/users/test`}
                 >
                   View
                 </Link>
