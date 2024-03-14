@@ -1,4 +1,4 @@
-import { getUserBuId } from "@/lib/getUserBuId";
+import { getUserBuId } from "@/lib/fetchingUsers";
 import { UserType } from "@/models/User";
 import Image from "next/image";
 

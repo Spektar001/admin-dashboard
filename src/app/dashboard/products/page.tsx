@@ -2,8 +2,26 @@ import Pagination from "@/components/pagination/Pagination";
 import Link from "next/link";
 import Image from "next/image";
 import Search from "@/components/search/Search";
+import { ProductType } from "@/models/Product";
+import { getProducts } from "@/lib/fetchingProducts";
 
-const ProductsPage = () => {
+interface ProductsPageProps {
+  searchParams: {
+    q?: string;
+    page?: number;
+  };
+}
+
+interface GetProducts {
+  products: ProductType[];
+  count: number;
+}
+
+const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
+  const q = searchParams?.q || "";
+  const page = searchParams?.page || 1;
+  const { count, products }: GetProducts = await getProducts(q, page);
+
   return (
     <div className="bg-[--bgSoft] p-5 mt-5 rounded-lg">
       <div className="flex items-center justify-between">
@@ -15,54 +33,61 @@ const ProductsPage = () => {
           Add new product
         </Link>
       </div>
-      <table className="w-full ">
-        <thead>
-          <tr>
-            <td>Title</td>
-            <td>Description</td>
-            <td>Price</td>
-            <td>Created At</td>
-            <td>Stock</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div className="flex items-center gap-2">
-                <Image
-                  src="/noproduct.jpg"
-                  alt="noproduct"
-                  width={40}
-                  height={40}
-                  className="rounded-full object-cover"
-                />
-                Iphone
-              </div>
-            </td>
-            <td>Smartphone</td>
-            <td>$803</td>
-            <td>08.03.2024</td>
-            <td>156</td>
-            <td>
-              <div className="flex gap-3">
-                <Link
-                  className="view transition-settings"
-                  href={`/dashboard/products/test`}
-                >
-                  View
-                </Link>
-                <Link
-                  className="delete transition-settings"
-                  href={`/dashboard/products/`}
-                >
-                  Delete
-                </Link>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <Pagination />
+      {!products.length && <div className="text-2xl mt-5">Nothing found!</div>}
+      {products.length > 0 && (
+        <>
+          <table className="w-full ">
+            <thead>
+              <tr>
+                <td>Title</td>
+                <td>Description</td>
+                <td>Price</td>
+                <td>Created At</td>
+                <td>Stock</td>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((product) => (
+                <tr key={product.id}>
+                  <td>
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src={product.img || "/noproduct.png"}
+                        alt="noproduct"
+                        width={40}
+                        height={40}
+                        className="rounded-full object-cover"
+                      />
+                      {product.title}
+                    </div>
+                  </td>
+                  <td>{product.desc}</td>
+                  <td>${product.price}</td>
+                  <td>{product.createdAt?.toString().slice(4, 16)}</td>
+                  <td>{product.stock}</td>
+                  <td>
+                    <div className="flex gap-3">
+                      <Link
+                        className="view transition-settings"
+                        href={`/dashboard/products/${product.id}`}
+                      >
+                        View
+                      </Link>
+                      <Link
+                        className="delete transition-settings"
+                        href={`/dashboard/products/`}
+                      >
+                        Delete
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <Pagination count={count} />
+        </>
+      )}
     </div>
   );
 };

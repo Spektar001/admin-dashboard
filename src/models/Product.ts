@@ -1,5 +1,19 @@
 import { model, models, Schema } from "mongoose";
 
+export type ProductType = {
+  id: string;
+  title: string;
+  desc: string;
+  price: number;
+  stock: number;
+  img: string;
+  color: string;
+  isActive: string;
+  size: string;
+  cat: string;
+  createdAt: string;
+};
+
 const productSchema = new Schema(
   {
     title: {
