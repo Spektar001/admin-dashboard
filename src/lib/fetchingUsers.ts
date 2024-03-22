@@ -8,7 +8,7 @@ export const getUserBuId = async (id: string) => {
     return user;
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to fetch user by id!");
+    throw new Error("Failed to fetch User by Id!");
   }
 };
 
@@ -27,6 +27,17 @@ export const getUsers = async (q: string, page: number) => {
     return { count, users };
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to fetch users!");
+    throw new Error("Failed to fetch Users!");
+  }
+};
+
+export const getUser = async (id: string) => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI!);
+    const user = await User.findById(id);
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to fetch single User!");
   }
 };

@@ -1,3 +1,4 @@
+import { updateUser } from "@/app/actions/userActions";
 import { getUserBuId } from "@/lib/fetchingUsers";
 import { UserType } from "@/models/User";
 import Image from "next/image";
@@ -16,8 +17,11 @@ const SingleUserPage = async ({ params }: { params: { id: string } }) => {
         </p>
       </div>
       <div className="flex-[3] bg-[--bgSoft] p-5 rounded-lg">
-        <form action="" className="flex flex-col formSingleUserAndProduct">
-          <input type="hidden" name="id" value={""} />
+        <form
+          action={updateUser}
+          className="flex flex-col formSingleUserAndProduct"
+        >
+          <input type="hidden" name="id" value={params.id} />
           <label>Username</label>
           <input type="text" name="username" placeholder={user.username} />
           <label>E-mail</label>

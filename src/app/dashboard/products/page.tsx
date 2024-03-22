@@ -4,6 +4,7 @@ import Image from "next/image";
 import Search from "@/components/search/Search";
 import { ProductType } from "@/models/Product";
 import { getProducts } from "@/lib/fetchingProducts";
+import { deleteProduct } from "@/app/actions/productActions";
 
 interface ProductsPageProps {
   searchParams: {
@@ -52,7 +53,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
                   <td>
                     <div className="flex items-center gap-2">
                       <Image
-                        src={product.img || "/noproduct.png"}
+                        src={product.img || "/noproduct.jpg"}
                         alt="noproduct"
                         width={40}
                         height={40}
@@ -73,12 +74,12 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
                       >
                         View
                       </Link>
-                      <Link
-                        className="delete transition-settings"
-                        href={`/dashboard/products/`}
-                      >
-                        Delete
-                      </Link>
+                      <form action={deleteProduct}>
+                        <input type="hidden" name="id" value={product.id} />
+                        <button className="delete transition-settings">
+                          Delete
+                        </button>
+                      </form>
                     </div>
                   </td>
                 </tr>

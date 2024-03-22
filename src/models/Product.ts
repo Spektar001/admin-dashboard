@@ -10,7 +10,7 @@ export type ProductType = {
   color: string;
   isActive: string;
   size: string;
-  cat: string;
+  category: string;
   createdAt: string;
 };
 
@@ -20,6 +20,10 @@ const productSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+    },
+    category: {
+      type: String,
+      required: true,
     },
     desc: {
       type: String,

@@ -1,9 +1,11 @@
+import { addProduct } from "@/app/actions/productActions";
+
 const AddProductPage = () => {
   return (
     <div className="bg-[--bgSoft] p-5 mt-5 rounded-lg">
-      <form action="" className="flex flex-wrap justify-between form">
+      <form action={addProduct} className="flex flex-wrap justify-between form">
         <input type="text" placeholder="Title" name="title" required />
-        <select name="cat" id="cat">
+        <select name="category" id="cat">
           <option value="general">Choose a Category</option>
           <option value="kitchen">Kitchen</option>
           <option value="phone">Phone</option>

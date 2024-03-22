@@ -1,10 +1,10 @@
+import { deleteUser } from "@/app/actions/userActions";
 import Pagination from "@/components/pagination/Pagination";
 import Search from "@/components/search/Search";
 import { getUsers } from "@/lib/fetchingUsers";
 import { UserType } from "@/models/User";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 
 interface UsersPageProps {
   searchParams: {
@@ -74,12 +74,12 @@ const UsersPage = async ({ searchParams }: UsersPageProps) => {
                       >
                         View
                       </Link>
-                      <Link
-                        className="delete transition-settings"
-                        href={`/dashboard/users/`}
-                      >
-                        Delete
-                      </Link>
+                      <form action={deleteUser}>
+                        <input type="hidden" name="id" value={user.id} />
+                        <button className="delete transition-settings">
+                          Delete
+                        </button>
+                      </form>
                     </div>
                   </td>
                 </tr>

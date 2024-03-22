@@ -8,7 +8,7 @@ export const getProductBuId = async (id: string) => {
     return product;
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to fetch product by id!");
+    throw new Error("Failed to fetch Product by Id!");
   }
 };
 
@@ -27,6 +27,6 @@ export const getProducts = async (q: string, page: number) => {
     return { count, products };
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to fetch products!");
+    throw new Error("Failed to fetch Products!");
   }
 };
