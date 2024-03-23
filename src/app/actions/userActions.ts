@@ -1,10 +1,10 @@
 "use server";
 
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
 import { User } from "@/models/User";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { getHashedPassword } from "@/lib/getHashedPassword";
 
 export const addUser = async (formData: FormData) => {
   const { username, email, password, phone, address, isAdmin, isActive } =
@@ -13,8 +13,7 @@ export const addUser = async (formData: FormData) => {
   try {
     await mongoose.connect(process.env.MONGO_URI!);
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(String(password), salt);
+    const hashedPassword = await getHashedPassword(String(password));
 
     const newUser = new User({
       username,
@@ -48,8 +47,7 @@ export const updateUser = async (formData: FormData) => {
   try {
     await mongoose.connect(process.env.MONGO_URI!);
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(String(password), salt);
+    const hashedPassword = await getHashedPassword(String(password));
 
     const updateFields = {
       username,

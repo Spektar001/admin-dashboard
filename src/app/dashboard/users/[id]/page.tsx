@@ -27,7 +27,12 @@ const SingleUserPage = async ({ params }: { params: { id: string } }) => {
           <label>E-mail</label>
           <input disabled type="email" name="email" value={user.email} />
           <label>Password</label>
-          <input type="password" name="password" placeholder={user.password} />
+          <input
+            type="password"
+            minLength={5}
+            name="password"
+            placeholder={user.password}
+          />
           <label>Phone</label>
           <input type="text" name="phone" placeholder={user.phone} />
           <label>Address</label>
