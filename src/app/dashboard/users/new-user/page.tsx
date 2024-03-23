@@ -5,7 +5,6 @@ const AddUserPage = () => {
     <div className="bg-[--bgSoft] p-5 mt-5 rounded-lg">
       <form action={addUser} className="flex flex-wrap justify-between form">
         <input
-          minLength={3}
           type="text"
           placeholder="Username"
           name="username"

@@ -48,10 +48,13 @@ export const updateUser = async (formData: FormData) => {
   try {
     await mongoose.connect(process.env.MONGO_URI!);
 
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(String(password), salt);
+
     const updateFields = {
       username,
       email,
-      password,
+      password: hashedPassword,
       phone,
       address,
       isAdmin,

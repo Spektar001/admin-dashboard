@@ -54,7 +54,8 @@ td {
   @apply hover:bg-[#3d4659];
 }
 
-button:disabled {
+button:disabled,
+input:disabled {
   cursor: not-allowed;
   opacity: 0.3;
 }

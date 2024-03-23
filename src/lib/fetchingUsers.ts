@@ -1,7 +1,7 @@
 import { User } from "@/models/User";
 import mongoose from "mongoose";
 
-export const getUserBuId = async (id: string) => {
+export const getUserById = async (id: string) => {
   try {
     await mongoose.connect(process.env.MONGO_URI!);
     const user = await User.findById(id);
@@ -9,6 +9,17 @@ export const getUserBuId = async (id: string) => {
   } catch (error) {
     console.log(error);
     throw new Error("Failed to fetch User by Id!");
+  }
+};
+
+export const getInfoByUser = async (email: string) => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI!);
+    const user = await User.findOne({ email: email })
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to fetch Users!");
   }
 };
 

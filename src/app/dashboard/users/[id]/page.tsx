@@ -1,10 +1,10 @@
 import { updateUser } from "@/app/actions/userActions";
-import { getUserBuId } from "@/lib/fetchingUsers";
+import { getUserById } from "@/lib/fetchingUsers";
 import { UserType } from "@/models/User";
 import Image from "next/image";
 
 const SingleUserPage = async ({ params }: { params: { id: string } }) => {
-  const user: UserType = await getUserBuId(params.id);
+  const user: UserType = await getUserById(params.id);
 
   return (
     <div className="flex gap-10 mt-5">
@@ -25,7 +25,7 @@ const SingleUserPage = async ({ params }: { params: { id: string } }) => {
           <label>Username</label>
           <input type="text" name="username" placeholder={user.username} />
           <label>E-mail</label>
-          <input type="email" name="email" placeholder={user.email} />
+          <input disabled type="email" name="email" value={user.email} />
           <label>Password</label>
           <input type="password" name="password" placeholder={user.password} />
           <label>Phone</label>

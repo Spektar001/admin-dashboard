@@ -2,24 +2,33 @@ import Card from "@/components/card/Card";
 import Chart from "@/components/chart/Chart";
 import RightBar from "@/components/rightbar/RightBar";
 import Transactions from "@/components/transactions/Transactions";
+import { authOptions } from "@/lib/authOptions";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-const DashboardPage = () => {
-  return (
-    <div className="flex gap-5 mt-5">
-      <div className="flex flex-col gap-2 flex-[3]">
-        <div className="flex gap-5 justify-between">
-          <Card />
-          <Card />
-          <Card />
+const DashboardPage = async () => {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect("/");
+  } else {
+    return (
+      <div className="flex gap-5 mt-5">
+        <div className="flex flex-col gap-2 flex-[3]">
+          <div className="flex gap-5 justify-between">
+            <Card />
+            <Card />
+            <Card />
+          </div>
+          <Transactions />
+          <Chart />
         </div>
-        <Transactions />
-        <Chart />
+        <div className="flex-1">
+          <RightBar />
+        </div>
       </div>
-      <div className="flex-1">
-        <RightBar />
-      </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default DashboardPage;

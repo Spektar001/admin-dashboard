@@ -1,22 +1,29 @@
 import Image from "next/image";
 import MenuLink from "./menuLink/MenuLink";
 import { menuItems } from "@/data/dataSidebar";
-import { MdLogout } from "react-icons/md";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
+import LogoutButton from "../LogoutButton";
+import { getInfoByUser } from "@/lib/fetchingUsers";
+import { UserType } from "@/models/User";
 
-const Sidebar = () => {
+const Sidebar = async () => {
+  const session = await getServerSession(authOptions);
+  const user: UserType = await getInfoByUser(session?.user?.email!);
+
   return (
     <div className="sticky top-10">
       <div className="flex items-center gap-5 mb-5">
         <Image
           className="rounded-full object-cover"
-          src={"/noavatar.png"}
+          src={user.img || "/noavatar.png"}
           alt={"avatar"}
           width={50}
           height={50}
         />
         <div className="flex flex-col">
-          <span className="font-medium">John Doe</span>
-          <span className="text-xs text-[--textSoft]">Administrator</span>
+          <span className="text-white font-medium">{user.username}</span>
+          <span className="text-xs text-[--textSoft]">{user.isAdmin ? 'Administrator' : 'Client'}</span>
         </div>
       </div>
       <ul>
@@ -31,13 +38,7 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      <button
-        type="button"
-        className="w-full flex items-center gap-2 p-5 mt-1 text-white rounded-xl hover:bg-[#2e374a] transition-settings"
-      >
-        <MdLogout />
-        Logout
-      </button>
+      <LogoutButton />
     </div>
   );
 };
