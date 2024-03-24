@@ -29,7 +29,8 @@ export const addUser = async (formData: FormData) => {
       isActive,
     });
 
-    const existingUser = await User.findOne({ username: username });
+    const existingUser = await User.findOne({ email: email });
+
     if (existingUser) {
       return false;
     } else {
