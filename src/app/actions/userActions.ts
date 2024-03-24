@@ -1,10 +1,14 @@
 "use server";
 
-import mongoose from "mongoose";
+import { getHashedPassword } from "@/lib/getHashedPassword";
 import { User } from "@/models/User";
+import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { getHashedPassword } from "@/lib/getHashedPassword";
+
+export interface UpdateFields {
+  [key: string]: string | FormDataEntryValue | undefined;
+}
 
 export const addUser = async (formData: FormData) => {
   const { username, email, password, phone, address, isAdmin, isActive } =
@@ -49,7 +53,7 @@ export const updateUser = async (formData: FormData) => {
 
     const hashedPassword = await getHashedPassword(String(password));
 
-    const updateFields = {
+    const updateFields: UpdateFields = {
       username,
       email,
       password: hashedPassword,
@@ -59,10 +63,11 @@ export const updateUser = async (formData: FormData) => {
       isActive,
     };
 
-    Object.keys(updateFields).forEach(
-      (key) =>
-        (updateFields[key] === "" || undefined) && delete updateFields[key]
-    );
+    for (const key in updateFields) {
+      if (updateFields[key] === "" || undefined) {
+        delete updateFields[key];
+      }
+    }
 
     await User.findByIdAndUpdate(id, updateFields);
   } catch (error) {

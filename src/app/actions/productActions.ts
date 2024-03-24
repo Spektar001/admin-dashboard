@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { Product } from "@/models/Product";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { UpdateFields } from "./userActions";
 
 export const addProduct = async (formData: FormData) => {
   const { title, category, price, stock, color, size, desc } =
@@ -39,7 +40,7 @@ export const updateProduct = async (formData: FormData) => {
   try {
     await mongoose.connect(process.env.MONGO_URI!);
 
-    const updateFields = {
+    const updateFields: UpdateFields = {
       title,
       desc,
       price,
@@ -48,10 +49,11 @@ export const updateProduct = async (formData: FormData) => {
       size,
     };
 
-    Object.keys(updateFields).forEach(
-      (key) =>
-        (updateFields[key] === "" || undefined) && delete updateFields[key]
-    );
+    for (const key in updateFields) {
+      if (updateFields[key] === "" || undefined) {
+        delete updateFields[key];
+      }
+    }
 
     await Product.findByIdAndUpdate(id, updateFields);
   } catch (error) {
