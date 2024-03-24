@@ -1,6 +1,5 @@
 import Card from "@/components/card/Card";
 import Chart from "@/components/chart/Chart";
-import RightBar from "@/components/rightbar/RightBar";
 import Transactions from "@/components/transactions/Transactions";
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
@@ -22,9 +21,6 @@ const DashboardPage = async () => {
           </div>
           <Transactions />
           <Chart />
-        </div>
-        <div className="flex-1">
-          <RightBar />
         </div>
       </div>
     );
