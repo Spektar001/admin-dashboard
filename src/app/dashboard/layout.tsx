@@ -12,9 +12,11 @@ export default function DashboardLayout({
       <div className="min-h-screen flex-1 bg-[--bgSoft] p-5">
         <Sidebar />
       </div>
-      <div className="flex-[4] p-5">
-        <Navbar />
-        {children}
+      <div className="flex-[4] flex flex-col justify-between p-5">
+        <div>
+          <Navbar />
+          {children}
+        </div>
         <Footer />
       </div>
     </div>
