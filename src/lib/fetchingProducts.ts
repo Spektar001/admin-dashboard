@@ -21,10 +21,21 @@ export const getProducts = async (q: string, page: number) => {
     const count = await Product.find({
       title: { $regex: regex },
     }).countDocuments();
-    const products = await Product.find({ title: { $regex: regex } })
-      .limit(ITEM_PER_PAGE)
-      .skip(ITEM_PER_PAGE * (page - 1));
-    return { count, products };
+
+    let currentPage = page;
+    let products = [];
+
+    while (products.length === 0 && currentPage > 0) {
+      const productsToSkip = ITEM_PER_PAGE * (currentPage - 1);
+
+      products = await Product.find({ title: { $regex: regex } })
+        .limit(ITEM_PER_PAGE)
+        .skip(productsToSkip);
+
+      currentPage--;
+    }
+
+    return { count, products, currentPage };
   } catch (error) {
     console.log(error);
     throw new Error("Failed to fetch Products!");

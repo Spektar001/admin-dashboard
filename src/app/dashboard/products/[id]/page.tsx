@@ -44,12 +44,13 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
           />
           <label>Size</label>
           <input type="text" name="size" placeholder={product.size || "size"} />
-          <label>Cat</label>
-          <select name="cat" id="cat">
-            <option value="kitchen">Kitchen</option>
-            <option value="phone">Phone</option>
-            <option value="computers">Computers</option>
-          </select>
+          <label>Category</label>
+          <input
+            disabled
+            type="text"
+            name="category"
+            placeholder={product.category}
+          />
           <label>Description</label>
           <textarea name="desc" id="desc" rows={9} placeholder={product.desc} />
           <button>Update</button>

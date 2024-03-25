@@ -16,12 +16,13 @@ interface ProductsPageProps {
 interface GetProducts {
   products: ProductType[];
   count: number;
+  currentPage: number;
 }
 
 const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
   const q = searchParams?.q || "";
   const page = searchParams?.page || 1;
-  const { count, products }: GetProducts = await getProducts(q, page);
+  const { count, products, currentPage }: GetProducts = await getProducts(q, page);
 
   return (
     <div className="bg-[--bgSoft] p-5 mt-5 rounded-lg">
@@ -34,7 +35,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
           Add new product
         </Link>
       </div>
-      {!products.length && <div className="text-2xl mt-5">Nothing found!</div>}
+      {!products.length && page === 1 && <div className="text-2xl mt-5">Nothing found!</div>}
       {products.length > 0 && (
         <>
           <table className="w-full ">
@@ -86,7 +87,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
               ))}
             </tbody>
           </table>
-          <Pagination count={count} />
+          <Pagination count={count} currentPage={currentPage} />
         </>
       )}
     </div>

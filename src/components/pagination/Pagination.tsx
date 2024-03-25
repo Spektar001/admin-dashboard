@@ -2,23 +2,27 @@
 
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
-const Pagination = ({ count }: { count: number }) => {
+const Pagination = ({
+  count,
+  currentPage,
+}: {
+  count: number;
+  currentPage: number;
+}) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const page = searchParams.get("page") || "1";
-
   const params = new URLSearchParams(searchParams);
   const ITEM_PER_PAGE = 5; // number of users or products on the page
 
-  const hasPrev = ITEM_PER_PAGE * (parseInt(page) - 1) > 0;
-  const hasNext = ITEM_PER_PAGE * (parseInt(page) - 1) + ITEM_PER_PAGE < count;
+  const hasPrev = ITEM_PER_PAGE * (currentPage + 1 - 1) > 0;
+  const hasNext = ITEM_PER_PAGE * (currentPage + 1 - 1) + ITEM_PER_PAGE < count;
 
   const handleChangePage = (type: string) => {
     type === "prev"
-      ? params.set("page", (parseInt(page) - 1).toString())
-      : params.set("page", (parseInt(page) + 1).toString());
+      ? params.set("page", (currentPage + 1 - 1).toString())
+      : params.set("page", (currentPage + 1 + 1).toString());
     replace(`${pathname}?${params}`);
   };
 
@@ -31,6 +35,9 @@ const Pagination = ({ count }: { count: number }) => {
       >
         Previous
       </button>
+      <div className="text-center px-3 py-1 bg-[#2E374A] rounded-md">
+        Page: {currentPage + 1}
+      </div>
       <button
         disabled={!hasNext}
         onClick={() => handleChangePage("next")}

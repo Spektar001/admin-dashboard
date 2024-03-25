@@ -15,7 +15,7 @@ export const getUserById = async (id: string) => {
 export const getInfoByUser = async (email: string) => {
   try {
     await mongoose.connect(process.env.MONGO_URI!);
-    const user = await User.findOne({ email: email })
+    const user = await User.findOne({ email: email });
     return user;
   } catch (error) {
     console.log(error);
@@ -32,10 +32,21 @@ export const getUsers = async (q: string, page: number) => {
     const count = await User.find({
       username: { $regex: regex },
     }).countDocuments();
-    const users = await User.find({ username: { $regex: regex } })
-      .limit(ITEM_PER_PAGE)
-      .skip(ITEM_PER_PAGE * (page - 1));
-    return { count, users };
+
+    let currentPage = page;
+    let users = [];
+
+    while (users.length === 0 && currentPage > 0) {
+      const usersToSkip = ITEM_PER_PAGE * (currentPage - 1);
+
+      users = await User.find({ username: { $regex: regex } })
+        .limit(ITEM_PER_PAGE)
+        .skip(usersToSkip);
+
+      currentPage--;
+    }
+
+    return { count, users, currentPage };
   } catch (error) {
     console.log(error);
     throw new Error("Failed to fetch Users!");

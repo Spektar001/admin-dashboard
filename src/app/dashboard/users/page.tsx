@@ -16,12 +16,13 @@ interface UsersPageProps {
 interface GetUsers {
   users: UserType[];
   count: number;
+  currentPage: number;
 }
 
 const UsersPage = async ({ searchParams }: UsersPageProps) => {
   const q = searchParams?.q || "";
   const page = searchParams?.page || 1;
-  const { count, users }: GetUsers = await getUsers(q, page);
+  const { count, users, currentPage }: GetUsers = await getUsers(q, page);
 
   return (
     <div className="bg-[--bgSoft] p-5 mt-5 rounded-lg">
@@ -34,7 +35,6 @@ const UsersPage = async ({ searchParams }: UsersPageProps) => {
           Add new user
         </Link>
       </div>
-      {!users.length && <div className="text-2xl mt-5">User is not found!</div>}
       {users.length > 0 && (
         <>
           <table className="w-full ">
@@ -86,7 +86,7 @@ const UsersPage = async ({ searchParams }: UsersPageProps) => {
               ))}
             </tbody>
           </table>
-          <Pagination count={count} />
+          <Pagination count={count} currentPage={currentPage} />
         </>
       )}
     </div>
